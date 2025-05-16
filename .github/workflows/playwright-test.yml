@@ -2,7 +2,7 @@ name: Run Playwright Tests Hourly
 
 on:
   schedule:
-    - cron: '*/1 * * * *'  # запуск каждую минуту
+    - cron: '*0 * * * *'  # запуск каждую минуту
   workflow_dispatch:       # запуск вручную из GitHub UI
 
 jobs:
