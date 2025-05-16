@@ -29,6 +29,13 @@ jobs:
       - name: Send Telegram notification
         if: success()
         run: |
-          curl -s -X POST https://api.telegram.org/bot${{ secrets.7945517138:AAHSibCQs2XyrCGaHfaiCFFLohYCm7uPibU }}/sendMessage \
-          -d chat_id=${{ secrets.6340117062 }} \
-          -d text="✅ Playwright тесты успешно прошли!"
+         curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+         -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+         -d text="✅ Playwright тесты успешно прошли!"
+
+        
+        
+        
+        
+        
+ 
