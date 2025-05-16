@@ -2,6 +2,8 @@ name: Run Playwright Tests
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'  # запуск каждый час
 
 jobs:
   test:
@@ -17,7 +19,7 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install
 
-      - name: Run Playwright tests
+      - name: Run Playwright tests (headless)
         run: npx playwright test
 
       - name: Send Telegram notification on success
