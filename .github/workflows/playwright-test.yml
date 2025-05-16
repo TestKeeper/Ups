@@ -2,7 +2,7 @@ name: Run Playwright tests
 
 on:
   schedule:
-    - cron: '*/1 * * * *'  # запуск каждый 1 минуту
+    - cron: '0 * * * *'  # запуск каждый 1 минуту
   workflow_dispatch:       # запуск вручную
 
 jobs:
