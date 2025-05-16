@@ -26,3 +26,27 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Playwright tests
+        run: npx playwright test
+
+      - name: Notify in Telegram
+        if: success()
+        run: |
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.7945517138:AAHSibCQs2XyrCGaHfaiCFFLohYCm7uPibU }}/sendMessage \
+            -d chat_id=${{ secrets.6340117062 }} \
+            -d text="✅ Playwright тесты прошли успешно в ${{ github.repository }}!"
