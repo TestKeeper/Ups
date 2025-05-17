@@ -45,7 +45,7 @@ test('Test on Site B', async ({ page }) => {
   }
 });
 
-test('Debug link test: Telegram button click', async ({ page }) => {
+test('Debug link test: Telegram button and redirect check', async ({ page }) => {
   try {
     const refreshToken = process.env.REFRESH_TOKEN;
     if (!refreshToken) throw new Error('REFRESH_TOKEN не указан в .env');
@@ -56,15 +56,25 @@ test('Debug link test: Telegram button click', async ({ page }) => {
     // Ждём появления iframe с Telegram
     const telegramFrame = page.frameLocator('iframe[src*="telegram.org/embed/upscale_stage_bot"]');
     const telegramButton = telegramFrame.locator('button.tgme_widget_login_button');
-
     await telegramButton.waitFor({ timeout: 10000 });
-    await telegramButton.click();
 
-    await sendTelegramMessage('✅ Telegram-кнопка на debug странице успешно нажата');
+    // Клик и отслеживание popup окна
+    const [popup] = await Promise.all([
+      page.context().waitForEvent('page'),
+      telegramButton.click()
+    ]);
+
+    await popup.waitForLoadState('load');
+
+    const finalUrl = popup.url();
+    if (!finalUrl.startsWith('https://app.upscale.stormtrade.dev/accounts')) {
+      throw new Error(`Ожидался переход на /accounts, но был: ${finalUrl}`);
+    }
+
+    await sendTelegramMessage(`✅ Telegram-кнопка работает, переход на ${finalUrl}`);
   } catch (e) {
-    await sendTelegramMessage(`❌ Ошибка при нажатии Telegram-кнопки: ${e.message}`);
+    await sendTelegramMessage(`❌ Ошибка в debug-тесте: ${e.message}`);
     throw e;
   }
 });
-
 
