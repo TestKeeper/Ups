@@ -21,9 +21,9 @@ test('Test on Site A', async ({ page }) => {
   try {
     await page.goto('https://app.upscale.stormtrade.dev/sign-in');
     await expect(page).toHaveTitle(expectedTitle);
-    await sendTelegramMessage('✅ Test on Site A passed');
+    await sendTelegramMessage('✅ Стейдж сервер доступен!');
   } catch (e) {
-    await sendTelegramMessage(`❌ Test on Site A failed: ${e.message}`);
+    await sendTelegramMessage(`❌ СТейдж сервер упал: ${e.message}`);
     throw e;
   }
 });
@@ -32,9 +32,9 @@ test('Test on Site B', async ({ page }) => {
   try {
     await page.goto('https://app.upscale.trade/sign-in');
     await expect(page).toHaveTitle(expectedTitle);
-    await sendTelegramMessage('✅ Test on Site B passed');
+    await sendTelegramMessage('✅ Прод сервер доступен');
   } catch (e) {
-    await sendTelegramMessage(`❌ Test on Site B failed: ${e.message}`);
+    await sendTelegramMessage(`❌ Прод сервер упал: ${e.message}`);
     throw e;
   }
 });
