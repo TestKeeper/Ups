@@ -3,7 +3,7 @@ name: Run Playwright tests
 on:
   schedule:
     - cron: '0 * * * *'  # каждый час
-  workflow_dispatch:       # запуск вручную
+  workflow_dispatch:      # запуск вручную через GitHub UI
 
 jobs:
   test:
@@ -23,6 +23,9 @@ jobs:
 
       - name: Install Playwright browsers
         run: npx playwright install
+
+      - name: Install dotenv (если используешь импорт через dotenv)
+        run: npm install dotenv
 
       - name: Run Playwright tests
         run: npx playwright test
