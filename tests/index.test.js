@@ -1,9 +1,15 @@
 import { test, expect } from '@playwright/test';
+import dotenv from 'dotenv';
+dotenv.config(); // загружаем .env переменные
 
-// ✅ Функция отправки сообщения в Telegram
 async function sendTelegramMessage(message) {
   const TG_BOT_TOKEN = process.env.TG_BOT_TOKEN;
   const TG_CHAT_ID = process.env.TG_CHAT_ID;
+
+  if (!TG_BOT_TOKEN || !TG_CHAT_ID) {
+    console.error('❌ TG_BOT_TOKEN или TG_CHAT_ID не заданы!');
+    return;
+  }
 
   await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
     method: 'POST',
@@ -15,10 +21,8 @@ async function sendTelegramMessage(message) {
   });
 }
 
-// ✅ Ожидаемый заголовок страницы
 const expectedTitle = 'Upscale — Prop Trading in Telegram • Capital up to $100 000';
 
-// ✅ Тест стейдж-сервера
 test('Test on Site A', async ({ page }) => {
   try {
     await page.goto('https://app.upscale.stormtrade.dev/sign-in');
@@ -30,7 +34,6 @@ test('Test on Site A', async ({ page }) => {
   }
 });
 
-// ✅ Тест прод-сервера
 test('Test on Site B', async ({ page }) => {
   try {
     await page.goto('https://app.upscale.trade/sign-in');
