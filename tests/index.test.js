@@ -27,9 +27,9 @@ test('Test on Site A', async ({ page }) => {
   try {
     await page.goto('https://app.upscale.stormtrade.de/sign-in');
     await expect(page).toHaveTitle(expectedTitle);
-    await sendTelegramMessage('✅ Стейдж сервер доступен!');
+    await sendTelegramMessage('✅ Стейдж сервер доступен!:bowtie:');
   } catch (e) {
-    await sendTelegramMessage(`❌ Стейдж сервер упал: ${e.message}`);
+    await sendTelegramMessage(`❌ Стейдж сервер упал:flushed: ${e.message}`);
     throw e;
   }
 });
@@ -38,9 +38,9 @@ test('Test on Site B', async ({ page }) => {
   try {
     await page.goto('https://app.upscale.trad/sign-in');
     await expect(page).toHaveTitle(expectedTitle);
-    await sendTelegramMessage('✅ Прод сервер доступен!');
+    await sendTelegramMessage('✅ Прод сервер доступен!:bowtie:');
   } catch (e) {
-    await sendTelegramMessage(`❌ Прод сервер упал: ${e.message}`);
+    await sendTelegramMessage(`❌ Прод сервер упал:flushed: ${e.message}`);
     throw e;
   }
 });
