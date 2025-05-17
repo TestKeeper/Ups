@@ -45,3 +45,26 @@ test('Test on Site B', async ({ page }) => {
   }
 });
 
+test('Debug link test: Telegram button click', async ({ page }) => {
+  try {
+    const refreshToken = process.env.REFRESH_TOKEN;
+    if (!refreshToken) throw new Error('REFRESH_TOKEN не указан в .env');
+
+    const debugUrl = `https://app.upscale.stormtrade.dev/debug/${refreshToken}`;
+    await page.goto(debugUrl);
+
+    // Ждём появления iframe с Telegram
+    const telegramFrame = page.frameLocator('iframe[src*="telegram.org/embed/upscale_stage_bot"]');
+    const telegramButton = telegramFrame.locator('button.tgme_widget_login_button');
+
+    await telegramButton.waitFor({ timeout: 10000 });
+    await telegramButton.click();
+
+    await sendTelegramMessage('✅ Telegram-кнопка на debug странице успешно нажата');
+  } catch (e) {
+    await sendTelegramMessage(`❌ Ошибка при нажатии Telegram-кнопки: ${e.message}`);
+    throw e;
+  }
+});
+
+
