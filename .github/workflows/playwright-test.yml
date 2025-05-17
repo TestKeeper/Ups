@@ -2,7 +2,7 @@ name: Run Playwright tests
 
 on:
   schedule:
-    - cron: '0 * * * *'  # запуск каждый 1 минуту
+    - cron: '0 * * * *'  # каждый час
   workflow_dispatch:       # запуск вручную
 
 jobs:
@@ -25,6 +25,9 @@ jobs:
         run: npx playwright install
 
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npx playwright test tests/index.test.js
+        env:
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
 
 
